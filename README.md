@@ -10,6 +10,10 @@ list files   md5 manifest   tar.gz      rsync to NAS   re-hash tarball,
                                                        compare NAS copy
 ```
 
+**[▶ Watch the 15-second demo](docs/demo.mp4)**: `archiver tui` archiving 10 files
+(56 MiB) end to end, recorded in a pseudoterminal. Stages are paced in the
+recording so the run fits 15 seconds.
+
 Every stage records its progress to disk as it goes. If a run dies at
 `transfer` (NAS asleep, network blip, laptop lid closed), re-running the same
 command skips straight back to `transfer`; nothing is re-hashed or re-tarred.
@@ -142,3 +146,17 @@ python -m unittest discover -s tests -v     # or: pytest
 
 Tests that need the real `rsync` binary or Textual are skipped when those
 aren't installed; CI installs both.
+
+### Re-recording the demo
+
+`scripts/record_demo.py` creates 10 fake files, runs `archiver tui` in a real
+pty, presses `r`, and renders the captured output to `docs/demo.mp4` through
+a terminal emulator. It needs `pyte`, Pillow and ffmpeg with libx264:
+
+```sh
+pip install pyte pillow
+python scripts/record_demo.py          # writes docs/demo.mp4 (+ a .cast, not committed)
+```
+
+If `rsync` isn't installed, the script puts the test suite's stand-in on
+`PATH` for the recording.

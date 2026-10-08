@@ -66,7 +66,7 @@ class ArchiverApp(App[int]):
     TITLE = "archiver"
     CSS = """
     #body { height: 1fr; }
-    #left { width: 58; padding: 0 1; }
+    #left { width: 62; padding: 0 1; }
     #stages { height: auto; margin-bottom: 1; }
     #summary { height: auto; color: $text-muted; }
     #right { width: 1fr; padding: 0 1; }
