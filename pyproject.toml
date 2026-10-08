@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "archiver-tui"
+description = "Monthly checksum -> tar -> rsync -> verify archival, with a resumable pipeline and a Textual TUI"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Nick Carter", email = "nick.carter@intezra.com" }]
+dynamic = ["version"]
+dependencies = []  # the engine and `archiver run` are stdlib-only
+
+[project.optional-dependencies]
+tui = ["textual>=0.80"]
+dev = ["textual>=0.80", "pytest>=8"]
+
+[project.scripts]
+archiver = "archiver.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "archiver.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]

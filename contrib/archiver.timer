@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the file archive on the 1st of each month
+
+[Timer]
+OnCalendar=*-*-01 02:00
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target

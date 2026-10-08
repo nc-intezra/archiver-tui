@@ -1,0 +1,23 @@
+# systemd user service + timer that replaces "remember to run it on the 1st".
+#
+#   cp contrib/archiver.service contrib/archiver.timer ~/.config/systemd/user/
+#   (edit the paths in ExecStart below)
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now archiver.timer
+#   loginctl enable-linger "$USER"     # so it runs while you're logged out
+#
+# Follow a run:     journalctl --user -u archiver -f
+# Check progress:   archiver status
+# If it failed, fix the cause and re-run (`systemctl --user start archiver`
+# or `archiver tui ...`); completed stages are skipped.
+
+[Unit]
+Description=Monthly file archive (checksum, tar, rsync, verify)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/archiver run /srv/data/to-archive nas:/volume1/archives/
+Nice=10
+IOSchedulingClass=idle
